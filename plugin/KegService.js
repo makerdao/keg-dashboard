@@ -1,11 +1,37 @@
 import { PublicService } from '@makerdao/services-core';
 import tracksTransactions from './tracksTransactions';
+import padStart from 'lodash/padStart';
+import padEnd from 'lodash/padEnd';
+import ethAbi from 'web3-eth-abi';
+
+const funcSigTopic = v => padEnd(ethAbi.encodeFunctionSignature(v), 66, '0');
+const EVENT_START = funcSigTopic('start()');
+const EVENT_BREW = funcSigTopic('brew(address[],uint256[])');
 
 export default class KegService extends PublicService {
   constructor(name = 'keg') {
     super(name, ['accounts', 'web3', 'smartContract']);
   }
 
+  /**Event History */
+  async getEventHistory() {
+    const web3 = this.get('web3');
+    const me = this.get('accounts').currentAccount().address;
+    const logs = await web3.getPastLogs({
+      address: this._keg().address,
+      topics: [
+        EVENT_START,
+        '0x' + padStart(me.replace('0x', ''), 64, '0'),
+        null,
+        null,
+      ],
+      fromBlock: '0',
+    });
+
+    return logs;
+  }
+
+  /**Keg Methods */
   getMugBalance() {
     const account = this.get('accounts').currentAccount().address;
     return this.mugs(account);
