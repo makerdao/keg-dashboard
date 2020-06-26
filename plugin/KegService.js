@@ -1,22 +1,43 @@
 import { PublicService } from '@makerdao/services-core';
+import tracksTransactions from './tracksTransactions';
 
 export default class KegService extends PublicService {
   constructor(name = 'keg') {
-    super(name, ['web3', 'smartContract']);
+    super(name, ['accounts', 'web3', 'smartContract']);
   }
 
-  //brew ?
-  //pass ?
-  //yank ?
+  getMugBalance() {
+    const account = this.get('accounts').currentAccount().address;
+    return this.mugs(account);
+  }
+
+  @tracksTransactions
+  async claimAmount(amount, { promise }) {
+    const wad = this.get('web3')._web3.utils.toWei(amount);
+    await this.sip(wad, { promise });
+  }
+
+  @tracksTransactions
+  async brew(addresses, wad, { promise }) {
+    return this._keg().brew(addresses, wad, { promise });
+  }
 
   //user withdraws all their compensation
-  chug() {
-    return this._keg().chug();
+  @tracksTransactions
+  async chug({ promise }) {
+    return this._keg().chug({ promise });
   }
 
   //user withdraws some of their compensation
-  sip(wad) {
-    return this._keg().sip(wad);
+  @tracksTransactions
+  async sip(wad, { promise }) {
+    return this._keg().sip(wad, { promise });
+  }
+
+  //user delegates compensation to another address
+  @tracksTransactions
+  async pass(address, { promise }) {
+    return this._keg().pass(address, { promise });
   }
 
   //accounting for tracking users balances
@@ -43,13 +64,3 @@ export default class KegService extends PublicService {
     return this.get('smartContract').getContractByName('KEG');
   }
 }
-
-/**
- * (/) initial scaffolding
- * (/) create abi for contract
- * (/) pull down contract & run test
- * (x) try to locate kovan deployed address (doesn't exist yet I think)
- * (/) setup plugin test spec
- * () setup snapshots for testing
- * () try to call chug in test
- */

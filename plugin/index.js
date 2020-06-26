@@ -8,7 +8,6 @@ export default {
   // The second parameter for this function is an optional object containing additional config parameters
   // See the maker.js file for how it is used.
   addConfig: function (config) {
-    console.log('keg service start');
     // Store contract names and addresses as demonstrated in the files below
     const contractAddresses = {
       mainnet: require('./contracts/addresses/mainnet.json'),

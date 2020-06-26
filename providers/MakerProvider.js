@@ -40,6 +40,18 @@ function MakerProvider({ children, network = 'mainnet' }) {
     return maker.service('token').getToken(token).balance();
   };
 
+  const getMugBalance = () => {
+    return maker.service('keg').getMugBalance();
+  };
+
+  const claimAll = () => {
+    return maker.service('keg').chug();
+  };
+
+  const claimAmount = amount => {
+    return maker.service('keg').claimAmount(amount);
+  };
+
   return (
     <MakerObjectContext.Provider
       value={{
@@ -48,6 +60,9 @@ function MakerProvider({ children, network = 'mainnet' }) {
         web3Connected,
         connectBrowserWallet,
         fetchTokenBalance,
+        getMugBalance,
+        claimAll,
+        claimAmount,
       }}
     >
       {children}
