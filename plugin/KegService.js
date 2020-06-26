@@ -5,28 +5,51 @@ export default class KegService extends PublicService {
     super(name, ['web3', 'smartContract']);
   }
 
-  //mugs <-- used by this lib
-  //pals <-- used by this lib
-  //buds <-- used by this lib
   //brew ?
   //pass ?
   //yank ?
-  //chug <-- used by this lib
-  //sip <-- used by this lib
 
-  testMethod() {
-    console.log('test works');
-    return 'test is working!';
+  //user withdraws all their compensation
+  chug() {
+    return this._keg().chug();
   }
 
-  getContractName() {
+  //user withdraws some of their compensation
+  sip(wad) {
+    return this._keg().sip(wad);
+  }
+
+  //accounting for tracking users balances
+  mugs(address) {
+    return this._keg().mugs(address);
+  }
+
+  //two-way mapping tracks delegates: delegate -> original
+  pals(address) {
+    return this._keg().pals(address);
+  }
+
+  //two-way mapping tracks delegates: original -> delegate
+  buds(address) {
+    return this._keg().buds(address);
+  }
+
+  //vow address
+  vow() {
+    return this._keg().vow();
+  }
+
+  _keg() {
     return this.get('smartContract').getContractByName('KEG');
   }
 }
 
 /**
- * (x) initial scaffolding
- * () create abi for contract
- * () pull down contract & run test
- * () try to locate kovan deployed address
+ * (/) initial scaffolding
+ * (/) create abi for contract
+ * (/) pull down contract & run test
+ * (x) try to locate kovan deployed address (doesn't exist yet I think)
+ * (/) setup plugin test spec
+ * () setup snapshots for testing
+ * () try to call chug in test
  */
