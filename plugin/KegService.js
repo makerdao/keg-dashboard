@@ -5,8 +5,11 @@ import padEnd from 'lodash/padEnd';
 import ethAbi from 'web3-eth-abi';
 
 const funcSigTopic = v => padEnd(ethAbi.encodeFunctionSignature(v), 66, '0');
+const KEG_BLOCK = '19284849';
+
 const EVENT_START = funcSigTopic('start()');
 const EVENT_BREW = funcSigTopic('brew(address[],uint256[])');
+const EVENT_YANK = funcSigTopic('yank()');
 
 export default class KegService extends PublicService {
   constructor(name = 'keg') {
@@ -15,6 +18,28 @@ export default class KegService extends PublicService {
 
   /**Event History */
   async getEventHistory() {
+    const web3 = this.get('web3');
+    // const me = this.get('accounts').currentAccount().address;
+
+    const events = await web3.getPastLogs({
+      address: this._keg().address,
+      topics: [],
+      fromBlock: KEG_BLOCK,
+    });
+
+    // const s = events.map(event => {
+    //   for (let event of events) {
+    //     // console.log('event', event);
+    //     web3
+    //       .getTransaction(event.transactionHash)
+    //       .then(x => console.log('input;', event.transactionHash, x.input));
+    //   }
+    // });
+
+    return events;
+  }
+
+  async parseStartEvents(events) {
     const web3 = this.get('web3');
     const me = this.get('accounts').currentAccount().address;
     const logs = await web3.getPastLogs({

@@ -13,9 +13,9 @@ import {
   Button,
 } from 'theme-ui';
 
-const EventHistoryTable = () => {
+const EventHistoryTable = ({ events }) => {
   return (
-    <Card sx={{ p: 0, pb: 3, height: 7 }}>
+    <Card sx={{ p: 0, pb: 3 }}>
       <Flex
         sx={{
           p: 3,
@@ -26,7 +26,7 @@ const EventHistoryTable = () => {
         <Heading>Transaction History</Heading>
       </Flex>
       <Grid
-        columns={2}
+        columns={['auto auto']}
         sx={{
           borderBottom: '1px solid',
           borderTop: '1px solid',
@@ -35,15 +35,15 @@ const EventHistoryTable = () => {
           py: 1,
         }}
       >
-        {['Date', 'Amount'].map((h, key) => (
-          <Text sx={{ fontWeight: 'bold' }} key={key}>
+        {['Id', 'Data'].map((h, key) => (
+          <Text sx={{ width: 'auto', fontWeight: 'bold' }} key={key}>
             {h}
           </Text>
         ))}
       </Grid>
       <Box
         sx={{
-          maxHeight: 6,
+          maxHeight: 8,
           overflow: 'auto',
           borderBottom: '1px solid',
           borderColor: 'muted',
@@ -63,18 +63,10 @@ const EventHistoryTable = () => {
           },
         }}
       >
-        {[
-          ['row1', '1'],
-          ['row2', '1'],
-          ['row3', '1'],
-          ['row4', '1'],
-          ['row5', '1'],
-          ['row6', '1'],
-        ].map((row, key) => (
-          <Grid columns={2} key={key}>
-            {row.map((cell, key) => (
-              <Text key={key}>{cell}</Text>
-            ))}
+        {events.map(({ id, data }) => (
+          <Grid columns={['auto auto']} key={id}>
+            <Text key={id}>{id}</Text>
+            <Text key={data}>{data}</Text>
           </Grid>
         ))}
       </Box>
