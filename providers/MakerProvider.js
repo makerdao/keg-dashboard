@@ -36,12 +36,18 @@ function MakerProvider({ children, network = 'mainnet' }) {
     loadMaker();
   }, [network]);
 
+  //Kev Service Calls
+
   const fetchTokenBalance = token => {
     return maker.service('token').getToken(token).balance();
   };
 
   const getMugBalance = () => {
     return maker.service('keg').getMugBalance();
+  };
+
+  const getUserDelegate = () => {
+    return maker.service('keg').getUserDelegate();
   };
 
   const claimAll = () => {
@@ -51,6 +57,20 @@ function MakerProvider({ children, network = 'mainnet' }) {
   const claimAmount = amount => {
     return maker.service('keg').claimAmount(amount);
   };
+
+  const delegateTo = address => {
+    return maker.service('keg').pass(address);
+  };
+
+  const removeDelegate = () => {
+    return maker.service('keg').yank();
+  };
+
+  /**
+   * if you are a user (bud) who delegates (pal) you see your delegate
+   * if you are a delegate (pal) you see your user who delegated to you
+   * (we'll need to have a different setup for pals dashboard, maybe set state user-type on load to switch)
+   */
 
   return (
     <MakerObjectContext.Provider
@@ -63,6 +83,9 @@ function MakerProvider({ children, network = 'mainnet' }) {
         getMugBalance,
         claimAll,
         claimAmount,
+        getUserDelegate,
+        delegateTo,
+        removeDelegate,
       }}
     >
       {children}

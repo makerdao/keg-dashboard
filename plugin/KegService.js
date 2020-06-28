@@ -32,9 +32,17 @@ export default class KegService extends PublicService {
   }
 
   /**Keg Methods */
+
+  // Gets mug of current user
   getMugBalance() {
     const account = this.get('accounts').currentAccount().address;
     return this.mugs(account);
+  }
+
+  // Gets delegate for current user
+  getUserDelegate() {
+    const account = this.get('accounts').currentAccount().address;
+    return this.buds(account);
   }
 
   @tracksTransactions
@@ -66,19 +74,25 @@ export default class KegService extends PublicService {
     return this._keg().pass(address, { promise });
   }
 
+  //user revokes delegation
+  @tracksTransactions
+  async yank({ promise }) {
+    return this._keg().yank({ promise });
+  }
+
   //accounting for tracking users balances
   mugs(address) {
     return this._keg().mugs(address);
   }
 
-  //two-way mapping tracks delegates: delegate -> original
-  pals(address) {
-    return this._keg().pals(address);
-  }
-
   //two-way mapping tracks delegates: original -> delegate
   buds(address) {
     return this._keg().buds(address);
+  }
+
+  //two-way mapping tracks delegates: delegate -> original
+  pals(address) {
+    return this._keg().pals(address);
   }
 
   //vow address
