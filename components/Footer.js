@@ -23,7 +23,7 @@ const Footer = () => {
         >
           Chat
         </NavLink>
-        <Link href="/terms" passHref>
+        <Link href="/" passHref>
           <NavLink
             variant="footer"
             sx={{

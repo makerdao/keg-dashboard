@@ -19,6 +19,20 @@ export default class KegService extends PublicService {
     super(name, ['accounts', 'web3', 'smartContract']);
   }
 
+  async getAllEventHistory() {
+    const abi = this._keg().interface.abi;
+    const address = this._keg().address;
+
+    const web3 = this.get('web3');
+    const me = this.get('accounts').currentAccount().address;
+    const web3Contract = this.get('web3').web3Contract(abi, address);
+
+    return web3Contract.getPastEvents(undefined, {
+      fromBlock: KEG_BLOCK,
+      toBlock: 'latest',
+    });
+  }
+
   /**Event History */
   async getEventHistory() {
     const abi = this._keg().interface.abi;
