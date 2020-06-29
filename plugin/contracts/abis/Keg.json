@@ -2,7 +2,6 @@
   {
     "inputs": [
       { "internalType": "address", "name": "vat_", "type": "address" },
-      { "internalType": "address", "name": "join_", "type": "address" },
       { "internalType": "address", "name": "vow_", "type": "address" }
     ],
     "payable": false,
@@ -34,7 +33,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "delegate",
+        "name": "bud",
         "type": "address"
       }
     ],
@@ -47,13 +46,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "bud",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pal",
+        "name": "bum",
         "type": "address"
       },
       {
@@ -78,7 +71,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "delegate",
+        "name": "bud",
         "type": "address"
       }
     ],
@@ -91,13 +84,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "bud",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pal",
+        "name": "bum",
         "type": "address"
       },
       {
@@ -247,17 +234,6 @@
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "join",
-    "outputs": [
-      { "internalType": "contract DaiJoinLike", "name": "", "type": "address" }
-    ],
-    "payable": false,
-    "stateMutability": "view",
     "type": "function"
   },
   {
