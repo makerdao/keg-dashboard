@@ -81,6 +81,7 @@ export default class KegService extends PublicService {
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
+    console.log('passEvents', passEvents);
     const yankEvents = await web3Contract.getPastEvents('ByeFelicia', {
       filter: {
         owner: me,
@@ -88,6 +89,7 @@ export default class KegService extends PublicService {
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
+    console.log('yankEvents', yankEvents);
 
     // console.log(
     //   'sipEvents.filter(ev => ev.returnValues.bum === me)',
