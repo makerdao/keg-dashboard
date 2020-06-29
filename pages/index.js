@@ -17,6 +17,7 @@ import useMaker from '../hooks/useMaker';
 import useTxTracker from '../hooks/useTxTracker';
 import { useEffect } from 'react';
 import EventHistoryTable from '../components/EventHistoryTable';
+import { fromWei } from '@makerdao/dai-plugin-mcd/dist/utils';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -46,7 +47,7 @@ const Index = () => {
     };
     const fetchBalances = async () => {
       const mug = await getMugBalance();
-      setMugBalance(mug.toString());
+      setMugBalance(fromWei(mug).toString());
     };
     const fetchDelegate = async () => {
       const pal = await getUserDelegate();
