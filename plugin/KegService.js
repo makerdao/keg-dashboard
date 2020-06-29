@@ -44,18 +44,18 @@ export default class KegService extends PublicService {
 
     /**Not tested */
     const chugEvents = await web3Contract.getPastEvents('DownTheHatch', {
-      filter: {
-        pal: me, //this may not work bc pal is not indexed
-      },
+      // filter: {
+      //   pal: me, //this may not work bc pal is not indexed
+      // },
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
     console.log('chugEvents', chugEvents);
 
     const sipEvents = await web3Contract.getPastEvents('JustASip', {
-      filter: {
-        pal: me,
-      },
+      // filter: {
+      //   pal: me,
+      // },
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
