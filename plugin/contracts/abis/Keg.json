@@ -3,12 +3,112 @@
     "inputs": [
       { "internalType": "address", "name": "vat_", "type": "address" },
       { "internalType": "address", "name": "join_", "type": "address" },
-      { "internalType": "address", "name": "dai_", "type": "address" },
       { "internalType": "address", "name": "vow_", "type": "address" }
     ],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beer",
+        "type": "uint256"
+      }
+    ],
+    "name": "BrewBeer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "delegate",
+        "type": "address"
+      }
+    ],
+    "name": "ByeFelicia",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "bud",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pal",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beer",
+        "type": "uint256"
+      }
+    ],
+    "name": "DownTheHatch",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "delegate",
+        "type": "address"
+      }
+    ],
+    "name": "DrinkingBuddy",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "bud",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pal",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beer",
+        "type": "uint256"
+      }
+    ],
+    "name": "JustASip",
+    "type": "event"
   },
   {
     "anonymous": true,
@@ -48,11 +148,62 @@
     "type": "event"
   },
   {
-    "constant": false,
+    "anonymous": false,
     "inputs": [
-      { "internalType": "address[]", "name": "bum", "type": "address[]" },
-      { "internalType": "uint256[]", "name": "wad", "type": "uint256[]" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "brewmaster",
+        "type": "address"
+      }
     ],
+    "name": "NewBrewMaster",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "bartender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beer",
+        "type": "uint256"
+      }
+    ],
+    "name": "PourBeer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "brewmaster",
+        "type": "address"
+      }
+    ],
+    "name": "RetiredBrewMaster",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "beer",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "internalType": "uint256", "name": "wad", "type": "uint256" }],
     "name": "brew",
     "outputs": [],
     "payable": false,
@@ -75,17 +226,6 @@
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "dai",
-    "outputs": [
-      { "internalType": "contract DSTokenLike", "name": "", "type": "address" }
-    ],
-    "payable": false,
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -140,10 +280,20 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "addr", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "bud", "type": "address" }],
     "name": "pass",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "address[]", "name": "bums", "type": "address[]" },
+      { "internalType": "uint256[]", "name": "wad", "type": "uint256[]" }
+    ],
+    "name": "pour",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

@@ -68,8 +68,10 @@ const icons = { ...standardIcons, ...brandIcons, brew };
 const theme = {
   ...makerTheme,
   icons,
-  /* Default styles can be overridden here 
-    and later published as an npm package if desired. */
+  colors: {
+    ...makerTheme.colors,
+    primaryMuted: '#B6EDE7',
+  },
   layout: {
     container: { ...makerTheme.layout.container, pt: 2 },
   },

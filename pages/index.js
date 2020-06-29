@@ -42,7 +42,7 @@ const Index = () => {
   useEffect(() => {
     const getEvents = async () => {
       const kegEvents = await maker.service('keg').getEventHistory();
-      console.log('KegEvents', kegEvents);
+      console.log('delegate events', kegEvents);
       setEvents(kegEvents);
     };
     const fetchBalances = async () => {
@@ -86,12 +86,12 @@ const Index = () => {
         });
   };
 
-  // const disabled =
-  //   inputState <= 0 ||
-  //   isNaN(inputState) ||
-  //   mugBalance <= '0' ||
-  //   inputState > mugBalance;
-  const disabled = false;
+  const disabled =
+    inputState <= 0 ||
+    isNaN(inputState) ||
+    mugBalance <= '0' ||
+    inputState > mugBalance;
+  // const disabled = false;
 
   return (
     <Container>
@@ -153,11 +153,7 @@ const Index = () => {
                       ></Input>
                     )}
                   </Flex>
-                  <Button
-                    onClick={handleDelegation}
-                    disabled={disabled}
-                    sx={{ width: 6 }}
-                  >
+                  <Button onClick={handleDelegation} sx={{ width: 6 }}>
                     {delegate === ZERO_ADDRESS ? 'Add' : 'Remove'}
                   </Button>
                 </Grid>
@@ -219,47 +215,3 @@ const Index = () => {
 };
 
 export default Index;
-
-// {/* <Card
-//           sx={{
-//             position: 'absolute',
-//             top: 0,
-//             bottom: 0,
-//             left: 0,
-//             right: 0,
-//             m: 'auto',
-//             zIndex: 1,
-//             width: 2,
-//             height: 2,
-//           }}
-//         > */}
-//         <Icon
-//           sx={{
-//             position: 'absolute',
-//             top: 0,
-//             bottom: 0,
-//             left: 0,
-//             right: 0,
-//             m: 'auto',
-//             zIndex: 1,
-//           }}
-//           size="6"
-//           name="ether"
-//         ></Icon>
-//         {/* </Card> */}
-
-// <Card
-//   sx={{
-//     position: 'absolute',
-//     top: 0,
-//     bottom: 0,
-//     left: 0,
-//     right: 0,
-//     zIndex: 0,
-//     m: 'auto',
-//     opacity: 0.5,
-//   }}
-// >
-//   {/* <Spinner sx={{ m: 'auto', zIndex: 2 }}></Spinner> */}
-//   <Icon name="brew" size="6"></Icon>
-// </Card>
