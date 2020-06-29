@@ -76,10 +76,10 @@ export default class KegService extends PublicService {
     });
 
     const allEvents = [
-      ...brewEvents.filter(ev => ev.returnValues.bartender === me),
-      ...pourEvents,
-      ...sipEvents,
-      ...chugEvents,
+      // ...brewEvents,
+      ...pourEvents.filter(ev => ev.returnValues.bartender === me),
+      ...sipEvents.filter(ev => ev.returnValues.pal === me),
+      ...chugEvents.filter(ev => ev.returnValues.pal === me),
       ...passEvents,
       ...yankEvents,
     ];
@@ -96,6 +96,7 @@ export default class KegService extends PublicService {
 
   // Gets mug of current user
   getMugBalance() {
+    //TODO check balance if currentUser is also a delegate
     const account = this.get('accounts').currentAccount().address;
     return this.mugs(account);
   }

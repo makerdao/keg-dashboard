@@ -12,6 +12,7 @@ import {
   Input,
   Button,
 } from 'theme-ui';
+import { fromWei } from '@makerdao/dai-plugin-mcd/dist/utils';
 
 const PASS = 'DrinkingBuddy';
 const YANK = 'ByeFelicia';
@@ -23,15 +24,21 @@ const POUR = 'PourBeer';
 const evMap = {
   [PASS]: 'Added Delegate',
   [YANK]: 'Removed Delegate',
-  [CHUG]: 'Withdraw All',
-  [SIP]: 'Withdraw',
+  [CHUG]: 'Withdraw All (Chug)',
+  [SIP]: 'Withdraw (Sip)',
   [BREW]: 'Brewed',
   [POUR]: 'Pour',
 };
 
 const formatData = (event, returnValues) => {
   if ([YANK, PASS].includes(event)) return returnValues.delegate;
-  if ([CHUG, SIP, BREW, POUR].includes(event)) return returnValues.beer;
+  if ([CHUG, SIP, BREW, POUR].includes(event)) {
+    const num = fromWei(returnValues.beer).gt(0.0001)
+      ? `${fromWei(returnValues.beer).toString()} Dai`
+      : '< 0.0001 Dai';
+
+    return num;
+  }
 };
 
 const EventHistoryTable = ({ events }) => {
