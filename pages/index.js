@@ -86,12 +86,12 @@ const Index = () => {
         });
   };
 
-  const disabled =
-    inputState <= 0 ||
-    isNaN(inputState) ||
-    mugBalance <= '0' ||
-    inputState > mugBalance;
-  // const disabled = false;
+  // const disabled =
+  //   inputState <= 0 ||
+  //   isNaN(inputState) ||
+  //   mugBalance <= '0' ||
+  //   inputState > mugBalance;
+  const disabled = false;
 
   return (
     <Container>
