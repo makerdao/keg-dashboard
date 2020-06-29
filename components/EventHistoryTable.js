@@ -16,32 +16,26 @@ import {
 const PASS = 'DrinkingBuddy';
 const YANK = 'ByeFelicia';
 const CHUG = 'DownTheHatch';
+const SIP = 'JustASip';
+const BREW = 'BrewBeer';
+const POUR = 'PourBeer';
 
 const evMap = {
   [PASS]: 'Added Delegate',
   [YANK]: 'Removed Delegate',
   [CHUG]: 'Withdraw All',
+  [SIP]: 'Withdraw',
+  [BREW]: 'Brewed',
+  [POUR]: 'Pour',
 };
 
 const formatData = (event, returnValues) => {
   if ([YANK, PASS].includes(event)) return returnValues.delegate;
-  if ([CHUG].includes(event)) return returnValues.beer;
+  if ([CHUG, SIP, BREW, POUR].includes(event)) return returnValues.beer;
 };
 
-// export function formatDate(d) {
-//   return (
-//     d.toLocaleDateString('en', {
-//       year: 'numeric',
-//       month: 'short',
-//       day: 'numeric',
-//     }) +
-//     ', ' +
-//     d.toLocaleTimeString('en')
-//   );
-// }
-
 const EventHistoryTable = ({ events }) => {
-  console.log('^^^events for table:', events);
+  console.log('events for table:', events);
   return (
     <Card sx={{ p: 0, pb: 3 }}>
       <Flex
@@ -93,18 +87,17 @@ const EventHistoryTable = ({ events }) => {
       >
         {events
           .sort((a, b) => b.blockNumber - a.blockNumber)
-          .map(
-            ({ id, event, data, timestamp, returnValues }) =>
-              console.log('timestamp table', event) || (
-                <Grid columns={3} key={id}>
-                  <Text key={id}>{evMap[event]}</Text>
-                  <Text key={data}>
-                    {timestamp && new Date(timestamp * 1000).toLocaleString()}
-                  </Text>
-                  <Text key={data}>{formatData(event, returnValues)}</Text>
-                </Grid>
-              )
-          )}
+          .map(({ id, event, data, timestamp, returnValues }) => (
+            <Grid columns={3} key={id}>
+              <Text key={id}>{evMap[event]}</Text>
+              <Text variant="smallText" key={data}>
+                {timestamp && new Date(timestamp * 1000).toLocaleString()}
+              </Text>
+              <Text variant="smallText" key={data}>
+                {formatData(event, returnValues)}
+              </Text>
+            </Grid>
+          ))}
       </Box>
     </Card>
   );

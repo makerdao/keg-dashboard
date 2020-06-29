@@ -42,7 +42,6 @@ const Index = () => {
   useEffect(() => {
     const getEvents = async () => {
       const kegEvents = await maker.service('keg').getEventHistory();
-      console.log('delegate events', kegEvents);
       setEvents(kegEvents);
     };
     const fetchBalances = async () => {

@@ -21,46 +21,45 @@ export default class KegService extends PublicService {
 
   /**Event History */
   async getEventHistory() {
-    const web3 = this.get('web3');
-    const me = this.get('accounts').currentAccount().address;
-
-    const e = this._keg().interface.events;
-    // console.log('eve', e);
-
     const abi = this._keg().interface.abi;
     const address = this._keg().address;
 
-    // const events = await web3.getPastLogs({
-    //   address: this._keg().address,
-    //   topics: [],
-    //   fromBlock: KEG_BLOCK,
-    // });
-
+    const web3 = this.get('web3');
+    const me = this.get('accounts').currentAccount().address;
     const web3Contract = this.get('web3').web3Contract(abi, address);
 
-    console.log('web3Contract', web3Contract);
-
-    // web3
-    //   .getTransaction(
-    //     '0xf9fab0a0baccde15fe5ae8ba061e8d7a5a5de6f2ff6210fdaa56ad7c55660372'
-    //   )
-    //   .then(x => console.log('input;', x.input));
-    // web3
-    //   .getTransaction(
-    //     '0x01ee582058c3fbddf2f9b6a22fafcce6c53e85f3c81056e7816a216432fabe75'
-    //   )
-    //   .then(x => console.log('input;', x.input));
-
-    // console.log('this._keg()', this._keg());
-
+    /**Not tested */
     const chugEvents = await web3Contract.getPastEvents('DownTheHatch', {
+      filter: {
+        pal: me, //this may not work bc pal is not indexed
+      },
+      fromBlock: KEG_BLOCK,
+      toBlock: 'latest',
+    });
+    console.log('chugEvents', chugEvents);
+
+    const sipEvents = await web3Contract.getPastEvents('JustASip', {
       filter: {
         pal: me,
       },
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
-    console.log('chugEvents', chugEvents);
+    console.log('sipEvents', sipEvents);
+
+    const pourEvents = await web3Contract.getPastEvents('PourBeer', {
+      fromBlock: KEG_BLOCK,
+      toBlock: 'latest',
+    });
+    console.log('pourEvents', pourEvents);
+
+    const brewEvents = await web3Contract.getPastEvents('BrewBeer', {
+      fromBlock: KEG_BLOCK,
+      toBlock: 'latest',
+    });
+    console.log('brewEvents', brewEvents);
+
+    /**Tested & Working */
     const passEvents = await web3Contract.getPastEvents('DrinkingBuddy', {
       filter: {
         owner: me,
@@ -68,20 +67,22 @@ export default class KegService extends PublicService {
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
-    const yankEvents = await web3Contract.getPastEvents(
-      'ByeFelicia',
-      {
-        filter: {
-          owner: me,
-        }, // Using an array means OR: e.g. 20 or 23
-        fromBlock: KEG_BLOCK,
-        toBlock: 'latest',
-      }
-      // function (error, events) {
-      // }
-    );
+    const yankEvents = await web3Contract.getPastEvents('ByeFelicia', {
+      filter: {
+        owner: me,
+      },
+      fromBlock: KEG_BLOCK,
+      toBlock: 'latest',
+    });
 
-    const allEvents = [...chugEvents, ...passEvents, ...yankEvents];
+    const allEvents = [
+      ...brewEvents.filter(ev => ev.returnValues.bartender === me),
+      ...pourEvents,
+      ...sipEvents,
+      ...chugEvents,
+      ...passEvents,
+      ...yankEvents,
+    ];
 
     for (let event of allEvents) {
       const block = await web3.getBlock(event.blockNumber, false);
@@ -89,23 +90,6 @@ export default class KegService extends PublicService {
     }
 
     return allEvents;
-  }
-
-  async parseStartEvents(events) {
-    const web3 = this.get('web3');
-    const me = this.get('accounts').currentAccount().address;
-    const logs = await web3.getPastLogs({
-      address: this._keg().address,
-      topics: [
-        EVENT_START,
-        '0x' + padStart(me.replace('0x', ''), 64, '0'),
-        null,
-        null,
-      ],
-      fromBlock: '0',
-    });
-
-    return logs;
   }
 
   /**Keg Methods */
