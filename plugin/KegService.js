@@ -53,9 +53,9 @@ export default class KegService extends PublicService {
     console.log('chugEvents', chugEvents);
 
     const sipEvents = await web3Contract.getPastEvents('JustASip', {
-      // filter: {
-      //   pal: me,
-      // },
+      filter: {
+        bum: me,
+      },
       fromBlock: KEG_BLOCK,
       toBlock: 'latest',
     });
@@ -89,11 +89,27 @@ export default class KegService extends PublicService {
       toBlock: 'latest',
     });
 
+    // console.log(
+    //   'sipEvents.filter(ev => ev.returnValues.bum === me)',
+    //   sipEvents.filter(
+    //     ev =>
+    //       console.log(ev.returnValues.bum, me, ev.returnValues.bum === me) ||
+    //       ev.returnValues.bum === me
+    //   )
+    // );
+
     const allEvents = [
       // ...brewEvents,
-      ...pourEvents.filter(ev => ev.returnValues.bartender === me),
-      ...sipEvents.filter(ev => ev.returnValues.pal === me),
-      ...chugEvents.filter(ev => ev.returnValues.pal === me),
+      ...pourEvents.filter(
+        ev => ev.returnValues.bartender?.toLowerCase() === me.toLowerCase()
+      ),
+      // ...sipEvents,
+      ...sipEvents.filter(
+        ev => ev.returnValues.bum?.toLowerCase() === me.toLowerCase()
+      ),
+      ...chugEvents.filter(
+        ev => ev.returnValues.bum?.toLowerCase() === me.toLowerCase()
+      ),
       ...passEvents,
       ...yankEvents,
     ];
